@@ -1232,9 +1232,6 @@ export default async function seedDemoData({ container }: ExecArgs) {
   logger.info("and only creates new items. You can run it multiple times safely.");
   logger.info("");
   logger.info("Next steps:");
-  logger.info("  1. Start your backend: yarn dev");
-  logger.info("  2. Check MeiliSearch dashboard: http://192.168.101.1:7700");
-  logger.info("  3. Check MinIO console: http://192.168.101.1:9001");
-  logger.info("  4. Test search API: POST /store/products/search");
+  logger.info("  Start your backend: yarn dev");
   logger.info("=".repeat(60));
 }
