@@ -9,7 +9,7 @@
     "medusa-b2b-storefront"
   ],
   "scripts": {
-    "dev": "next dev -p 8000",
+    "dev": "./kill-port.sh 8000 && echo '🗑️ Cleaning .next folder...' && rm -rf .next && echo '✅ .next folder deleted' && echo '🚀 Starting Next.js storefront...' && next dev -p 8000",
     "build": "next build",
     "start": "next start -p 8000",
     "lint": "next lint",

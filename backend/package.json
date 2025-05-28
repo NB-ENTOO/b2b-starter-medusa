@@ -16,12 +16,13 @@
     "build": "medusa build",
     "seed": "medusa exec ./src/scripts/seed.ts",
     "start": "medusa start",
-    "dev": "medusa develop",
+    "dev": "./kill-port.sh 9000 && echo '🚀 Starting Medusa backend...' && medusa develop",
     "test:integration:http": "TEST_TYPE=integration:http NODE_OPTIONS=--experimental-vm-modules jest --silent=false --runInBand --forceExit",
     "test:integration:modules": "TEST_TYPE=integration:modules NODE_OPTIONS=--experimental-vm-modules jest --silent --runInBand --forceExit",
     "test:unit": "TEST_TYPE=unit NODE_OPTIONS=--experimental-vm-modules jest --silent --runInBand --forceExit"
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.817.0",
     "@medusajs/admin-sdk": "2.8.3",
     "@medusajs/cli": "2.8.3",
     "@medusajs/framework": "2.8.3",
@@ -32,7 +33,11 @@
     "@mikro-orm/knex": "6.4.3",
     "@mikro-orm/migrations": "6.4.3",
     "@mikro-orm/postgresql": "6.4.3",
+    "@rokmohar/medusa-plugin-meilisearch": "^1.1.4",
     "awilix": "^8.0.1",
+    "bullmq": "^5.15.0",
+    "ioredis": "^5.4.1",
+    "meilisearch": "^0.48.2",
     "pg": "^8.13.0",
     "zod": "3.22.4"
   },

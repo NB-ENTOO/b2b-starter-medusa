@@ -32,6 +32,7 @@
 ## Table
 
 - [Prerequisites](#prerequisites)
+- [Enhanced Development Setup](#-enhanced-development-setup)
 - [Overview](#overview)
   - [Features](#features)
   - [Demo](#demo)
@@ -50,6 +51,59 @@
 - ✅ Postgres 15
 - ✅ Medusa 2.4
 - ✅ Next.js 15
+- ✅ Docker & Docker Compose (for infrastructure services)
+
+&nbsp;
+
+## 🚀 Enhanced Development Setup
+
+This fork includes additional enhancements to make your MedusaJS learning journey easier with a **ready-to-deploy local development environment**:
+
+### ✨ What's Added
+
+- **🐳 Docker Compose Infrastructure** - Complete containerized setup for all services
+- **📦 MinIO S3 Storage** - Self-hosted file storage with automatic image processing
+- **🔍 MeiliSearch Integration** - Full-text search with beautiful storefront search modal
+- **⚡ Redis Caching** - Event bus and workflow engine optimization
+- **🛠️ Enhanced Seed Script** - Idempotent seeding with automatic image processing
+- **🎯 Developer Experience** - Improved port management and development tools
+
+### 🚀 Quick Start with Docker
+
+```bash
+# Start all infrastructure services
+cd "docker compose"
+docker-compose up -d
+
+# Services will be available at:
+# - PostgreSQL: localhost:5432
+# - Redis: localhost:6379  
+# - MeiliSearch: localhost:7700
+# - MinIO: localhost:9090 (API) / localhost:9001 (Console)
+```
+
+#### 🗂️ Data Persistence & Fresh Start
+
+All service data is stored in the `docker compose/data/` folder:
+- `data/postgres/` - Database files
+- `data/redis/` - Redis persistence
+- `data/meilisearch/` - Search index data
+- `data/minio_data/` - File storage
+
+**🔄 To start completely fresh:**
+```bash
+# Stop services
+docker-compose down
+
+# Remove all data
+rm -rf data/
+
+# Start fresh
+docker-compose up -d
+# Then re-run the seed script: yarn medusa db:migrate && yarn run seed
+```
+
+> **Note**: This is a **development-focused enhancement** to help newcomers get started quickly. While it includes production-ready components, additional configuration may be needed for production deployment.
 
 &nbsp;
 
@@ -113,16 +167,27 @@ For a full feature overview, please visit [the project wiki](https://github.com/
 
 ## Quickstart
 
-#### Setup Medusa project
+#### Setup Infrastructure (Enhanced Version)
 
 ```bash
 # Clone the repository
-git clone https://github.com/medusajs/b2b-starter-medusa.git
+git clone https://github.com/NB-ENTOO/b2b-starter-medusa.git
 
+# Start infrastructure services with Docker
+cd "docker compose"
+docker-compose up -d
+
+# Wait for services to be ready (about 30 seconds)
+# Check service status: docker-compose ps
+```
+
+#### Setup Medusa project
+
+```bash
 ## Setup Backend
 
 # Go to the folder
-cd ./backend
+cd ../backend
 
 # Clone .env.template
 cp .env.template .env
@@ -131,6 +196,10 @@ cp .env.template .env
 yarn install
 
 # Install dependencies, setup database & seed data
+# Note: The enhanced seed script will automatically:
+# - Set up MinIO file storage with processed product images
+# - Configure MeiliSearch with product indexing
+# - Create sample products with proper file storage
 yarn install && yarn medusa db:create && yarn medusa db:migrate && yarn run seed && yarn medusa user -e admin@test.com -p supersecret -i admin
 
 # Start Medusa project - backend & admin
@@ -167,6 +236,15 @@ Visit the following links to see the Medusa storefront & admin
 
 - [Medusa Admin](http://localhost:9000/app)
 - [Medusa Storefront](http://localhost:8000)
+
+#### 🎉 Enhanced Features Available
+
+After setup, you'll have access to these additional features:
+
+- **🔍 Search Functionality** - Try the search bar in the storefront (⌘K or Ctrl+K)
+- **📦 File Storage** - Product images are served from your local MinIO instance
+- **📊 Search Analytics** - MeiliSearch dashboard at [http://localhost:7700](http://localhost:7700)
+- **🗄️ File Management** - MinIO console at [http://localhost:9001](http://localhost:9001) (admin/password: `medusaminio`)
 
 &nbsp;
 
